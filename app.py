@@ -1,34 +1,44 @@
-from PyQt5.QtWidgets import *
-import sys
-from tkinter import *
-from tkinter import filedialog
-# app = QApplication([])
-# window = QWidget()
-# layout = QVBoxLayout()
-# layout.addWidget(QPushButton('Go'))
-# layout.addWidget(QPushButton('Bye'))
-# window.setLayout(layout)
-# window.resize(800,400)
-# window.show()
-#
-# app.exec_()
-def browse_button():
-    # Allow user to select a directory and store it in global var
-    # called folder_path
-    global folder_path
-    filename = filedialog.askdirectory()
-    folder_path.set(filename)
-    print(filename)
+import tkinter as tk
 
-root = Tk()
-#geometry handles height&width of frame
-root.geometry("600x400")
-button1 = Button(text="Previous Data", command=browse_button)
-folder_path = StringVar()
-lbl1 = Label(master=root,textvariable=folder_path)
-lbl1.grid(row=0, column=1)
-button2 = Button(text="Browse", command=browse_button)
-button1.grid(row=1, column=1)
-button2.grid(row=10, column=1)
+# Global Variables
+LARGE_FONT = ("Verdana", 12)
+BUTTON_FONT = ("Verdana", 8)
+FOLDER_PATH = ""
 
-mainloop()
+
+# Main Program Class
+class StrikeData(tk.Tk):
+    # Initialization method
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+        frame = StartPage(container, self)
+        self.frames[StartPage] = frame
+        frame.grid(row=0, column=0, sticky="nsew")
+        self.show_frame(StartPage)
+
+    # Method used to show a frame in the open window
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
+
+
+# Initial page utilized on program start
+class StartPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="Airstrike Data Collection", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+        prevButton = tk.Button(self, text="Use Existing Data", font=BUTTON_FONT)
+        prevButton.pack(pady=10, padx=10)
+
+
+# App initialization & execution
+app = StrikeData()
+app.geometry("600x400")
+app.mainloop()
