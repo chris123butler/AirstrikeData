@@ -40,5 +40,6 @@ class StartPage(tk.Frame):
 
 # App initialization & execution
 app = StrikeData()
+app.title("OIR Airstrike Data Collection")
 app.geometry("600x400")
 app.mainloop()
