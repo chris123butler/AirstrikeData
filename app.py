@@ -2,7 +2,7 @@ import tkinter as tk
 
 # Global Variables
 LARGE_FONT = ("Verdana", 12)
-BUTTON_FONT = ("Verdana", 8)
+BUTTON_FONT = ("Verdana", 10)
 FOLDER_PATH = ""
 
 
@@ -28,14 +28,22 @@ class StrikeData(tk.Tk):
         frame.tkraise()
 
 
+def qf(param):
+    print(param)
+
 # Initial page utilized on program start
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Airstrike Data Collection", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
-        prevButton = tk.Button(self, text="Use Existing Data", font=BUTTON_FONT)
-        prevButton.pack(pady=10, padx=10)
+
+        button1 = tk.Button(self, text="BUTTON 1", font=BUTTON_FONT,
+                              command=lambda: qf("This button works!"))
+        button1.pack()
+        button2 = tk.Button(self, text="BUTTON 2", font=BUTTON_FONT,
+                              command=lambda: qf("This button works too!"))
+        button2.pack()
 
 
 # App initialization & execution
