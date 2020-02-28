@@ -20,7 +20,7 @@ class StrikeData(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, ProgressPage):
+        for F in (StartPage, ProgressPage, CompletePage):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -49,6 +49,22 @@ class ProgressPage(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         label = tk.Label(self, text="Airstrike Data Collection - Page 2", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        button1 = tk.Button(self, text="TO PAGE 1", font=BUTTON_FONT,
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack()
+
+        button2 = tk.Button(self, text="TO END PAGE", font=BUTTON_FONT,
+                            command=lambda: controller.show_frame(CompletePage))
+        button2.pack()
+
+
+class CompletePage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        label = tk.Label(self, text="[COMPLETE] Airstrike Data Collection", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
         button1 = tk.Button(self, text="TO PAGE 1", font=BUTTON_FONT,
