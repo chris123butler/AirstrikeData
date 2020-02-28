@@ -1,9 +1,11 @@
 import tkinter as tk
+from tkinter.ttk import *
 
 # Global Variables
 LARGE_FONT = ("Verdana", 12)
 BUTTON_FONT = ("Verdana", 10)
-FOLDER_PATH = ""
+EXISTING_PATH = ""
+OUTPUT_PATH = ""
 
 
 # Main Program Class
@@ -17,9 +19,12 @@ class StrikeData(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        frame = StartPage(container, self)
-        self.frames[StartPage] = frame
-        frame.grid(row=0, column=0, sticky="nsew")
+
+        for F in (StartPage, ProgressPage):
+            frame = F(container, self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+
         self.show_frame(StartPage)
 
     # Method used to show a frame in the open window
@@ -28,22 +33,27 @@ class StrikeData(tk.Tk):
         frame.tkraise()
 
 
-def qf(param):
-    print(param)
-
 # Initial page utilized on program start
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Airstrike Data Collection", font=LARGE_FONT)
+        label = tk.Label(self, text="Airstrike Data Collection - Page 1", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        button1 = tk.Button(self, text="BUTTON 1", font=BUTTON_FONT,
-                              command=lambda: qf("This button works!"))
+        button1 = tk.Button(self, text="TO PAGE 2", font=BUTTON_FONT, command=lambda: controller.show_frame(ProgressPage))
         button1.pack()
-        button2 = tk.Button(self, text="BUTTON 2", font=BUTTON_FONT,
-                              command=lambda: qf("This button works too!"))
-        button2.pack()
+
+# Progress Frame containing Progress Bar (TODO)
+class ProgressPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        label = tk.Label(self, text="Airstrike Data Collection - Page 2", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        button1 = tk.Button(self, text="TO PAGE 1", font=BUTTON_FONT,
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack()
 
 
 # App initialization & execution
