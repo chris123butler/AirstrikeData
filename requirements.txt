@@ -1,1 +1,4 @@
 appJar
+pandas
+PyPDF2
+requests
