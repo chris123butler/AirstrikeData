@@ -7,8 +7,8 @@ def press(button):
         app.stop()
     else:
         # Existing logic
-        if app.getEntry("Existing") != "Optional":
-            exist = app.getEntry("Existing")
+        if app.getEntry("Existing Data") != "Optional":
+            exist = app.getEntry("Existing Data")
         else:
             exist = ""
 
@@ -17,20 +17,21 @@ def press(button):
             out = app.getEntry("Output")
         else:
             out = ""
-        print("Existing: " + exist + " | Output: " + out)
+        print("Existing File: " + exist + " | Output Path: " + out)
+
 
 
 # create a GUI variable called app
-app = gui("OIR Strike Collection", "450x200")
+app = gui("OIR Airstrike Collection", "450x200")
 app.setBg("gold")
-app.setFont(18)
+app.setFont(16)
 
-app.addLabel("title", "Welcome to OIR Airstrike Data Collection")
+app.addLabel("title", "Airstrike Data Collection")
 app.setLabelBg("title", "green")
 app.setLabelFg("title", "gold")
 
-app.addLabelFileEntry("Existing")
-app.setEntryDefault("Existing", "Optional")
+app.addLabelFileEntry("Existing Data")
+app.setEntryDefault("Existing Data", "Optional")
 app.addLabelDirectoryEntry("Output")
 app.setEntryDefault("Output", "Select path...")
 
