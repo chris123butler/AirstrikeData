@@ -1,5 +1,6 @@
 # import the library
 from appJar import gui
+from datetime import date
 import pdf_extractor as ex
 
 exist = "Optional"
@@ -29,12 +30,18 @@ def press(button):
         # Output logic
         if app.getEntry("Output") != "Select path...":
             out = app.getEntry("Output")
+            today = date.today()
+            d1 = today.strftime("%Y%m%d")
+            out = out + "/" + d1 + ".csv"
         else:
+            # TODO: FORCE USER INPUT
             out = ""
 
         data = ex.data_from_urls(urls, out)
-        # TODO REMOVE THIS TOO
+        # TODO: REMOVE DEBUG LINE
         print(data)
+
+        app.stop()
 
 
 
@@ -42,7 +49,7 @@ def press(button):
 # create a GUI variable called app
 app = gui("OIR Airstrike Collection", "450x200")
 app.setBg("gold")
-app.setFont(16)
+app.setFont(14)
 
 app.addLabel("title", "Airstrike Data Collection")
 app.setLabelBg("title", "green")
