@@ -79,7 +79,7 @@ def create_and_save_dataframe(dict, dest_file):
 def data_from_files(files, path):
     data = {'Release Number': [],
             'URL': [],
-            'Report Date': [],
+            'Report Date':  [],
             'Strike Date': [],
             'Number of Strikes': [],
             'Country': [],
