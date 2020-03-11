@@ -1,79 +1,41 @@
-import tkinter as tk
-from tkinter.ttk import *
+# import the library
+from appJar import gui
 
-# Global Variables
-LARGE_FONT = ("Verdana", 12)
-BUTTON_FONT = ("Verdana", 10)
-EXISTING_PATH = ""
-OUTPUT_PATH = ""
+# handle button events
+def press(button):
+    if button == "Cancel":
+        app.stop()
+    else:
+        # Existing logic
+        if app.getEntry("Existing") != "Optional":
+            exist = app.getEntry("Existing")
+        else:
+            exist = ""
 
-
-# Main Program Class
-class StrikeData(tk.Tk):
-    # Initialization method
-    def __init__(self, *args, **kwargs):
-        tk.Tk.__init__(self, *args, **kwargs)
-        container = tk.Frame(self)
-        container.pack(side="top", fill="both", expand=True)
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
-
-        self.frames = {}
-
-        for F in (StartPage, ProgressPage, CompletePage):
-            frame = F(container, self)
-            self.frames[F] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame(StartPage)
-
-    # Method used to show a frame in the open window
-    def show_frame(self, cont):
-        frame = self.frames[cont]
-        frame.tkraise()
+        # Output logic
+        if app.getEntry("Output") != "Select path...":
+            out = app.getEntry("Output")
+        else:
+            out = ""
+        print("Existing: " + exist + " | Output: " + out)
 
 
-# Initial page utilized on program start
-class StartPage(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Airstrike Data Collection - Page 1", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
+# create a GUI variable called app
+app = gui("OIR Strike Collection", "450x200")
+app.setBg("gold")
+app.setFont(18)
 
-        button1 = tk.Button(self, text="TO PAGE 2", font=BUTTON_FONT, command=lambda: controller.show_frame(ProgressPage))
-        button1.pack()
+app.addLabel("title", "Welcome to OIR Airstrike Data Collection")
+app.setLabelBg("title", "green")
+app.setLabelFg("title", "gold")
 
-# Progress Frame containing Progress Bar (TODO)
-class ProgressPage(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+app.addLabelFileEntry("Existing")
+app.setEntryDefault("Existing", "Optional")
+app.addLabelDirectoryEntry("Output")
+app.setEntryDefault("Output", "Select path...")
 
-        label = tk.Label(self, text="Airstrike Data Collection - Page 2", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
+# link the buttons to the function called press
+app.addButtons(["Go", "Cancel"], press)
 
-        button1 = tk.Button(self, text="TO PAGE 1", font=BUTTON_FONT,
-                            command=lambda: controller.show_frame(StartPage))
-        button1.pack()
-
-        button2 = tk.Button(self, text="TO END PAGE", font=BUTTON_FONT,
-                            command=lambda: controller.show_frame(CompletePage))
-        button2.pack()
-
-
-class CompletePage(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        label = tk.Label(self, text="[COMPLETE] Airstrike Data Collection", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
-
-        button1 = tk.Button(self, text="TO PAGE 1", font=BUTTON_FONT,
-                            command=lambda: controller.show_frame(StartPage))
-        button1.pack()
-
-
-# App initialization & execution
-app = StrikeData()
-app.title("OIR Airstrike Data Collection")
-app.geometry("600x400")
-app.mainloop()
+# start the GUI
+app.go()
