@@ -8,6 +8,7 @@ from dateutil.parser import parse
 import requests
 import io
 
+
 def text_from_file(file):
     with open(file, 'rb') as raw_file:
         pdf_reader = PyPDF2.PdfFileReader(raw_file)
@@ -34,32 +35,32 @@ def text_from_url(url):
 
 
 def date_from(text):
-    date = re.search("\w+\.* \d+, \d{4}", text)
+    date = re.search(r'\w+\.* \d+, \d{4}', text)
     dt_object = parse(date.group())  # parses found date into datetime object for consistent format
 
     return dt_object
 
 
 def release_number_from(text):
-    release_number = re.search("\d{8}-?\d*", text)
+    release_number = re.search(r'\d{8}-?\d*', text)
     release_number = release_number.group()
 
     return release_number
 
 
 # takes in a dictionary and fills unused keys-values with enough Nones for consistent length
-def fill_empty_values(dict):
-    number = len(dict[list(dict.keys())[0]])
-    for key in dict.keys():
-        if len(dict[key]) == 0:
-            dict[key] = [None] * number
+def fill_empty_values(dictionary):
+    number = len(dictionary[list(dictionary.keys())[0]])
+    for key in dictionary.keys():
+        if len(dictionary[key]) == 0:
+            dictionary[key] = [None] * number
 
-    return dict
+    return dictionary
 
 
 # creates a dataframe from a dictionary, saves the dataframe in the specified file path, and returns the dataframe
-def create_and_save_dataframe(dict, dest_file):
-    df = pd.DataFrame.from_dict(dict)
+def create_and_save_dataframe(dictionary, dest_file):
+    df = pd.DataFrame.from_dict(dictionary)
     df.to_csv(dest_file, index=None, header=True)
 
     return df
