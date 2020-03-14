@@ -2,19 +2,10 @@
 from appJar import gui
 from datetime import date
 import pdf_extractor as ex
+import webscrape as scr
 
 exist = "Optional"
 out = "Select path..."
-
-# TODO REMOVE THIS
-urls = ['https://www.inherentresolve.mil/Portals/14/Documents/Strike%20Releases/2015/04April/1%20Apr%20Strike%20Release.pdf?ver=2017-01-13-131120-810',
-       'https://www.inherentresolve.mil/Portals/14/Documents/Strike%20Releases/2015/07July/20150707%20Strike%20Release%20final.pdf?ver=2017-01-13-131141-437',
-       'https://www.inherentresolve.mil/Portals/14/Documents/Strike%20Releases/2017/01January/20170125%20Strike%20Release%20Final.pdf?ver=2017-01-25-093917-853',
-       'https://www.inherentresolve.mil/Portals/14/Documents/Strike%20Releases/2017/02February/20170203%20Strike%20Release%20Final.pdf?ver=2017-02-03-074516-280',
-       'https://www.inherentresolve.mil/Portals/14/Documents/Strike%20Releases/2017/02February/20170217%20Strike%20Release%20Final.pdf?ver=2017-02-17-093725-800',
-       'https://www.inherentresolve.mil/Portals/14/Documents/Strike%20Releases/2017/10October/20171023%20Strike%20Release.pdf?ver=2017-10-23-033103-287',
-       'https://www.inherentresolve.mil/Portals/14/Documents/Strike%20Releases/2017/11November/20171103%20CJTF-OIR%20Strike%20Release.pdf?ver=2017-11-03-065958-837']
-
 
 # handle button events
 def press(button):
@@ -37,6 +28,7 @@ def press(button):
             # TODO: FORCE USER INPUT
             out = ""
 
+        urls = scr.url_scrape()
         data = ex.data_from_urls(urls, out)
         # TODO: REMOVE DEBUG LINE
         print(data)
