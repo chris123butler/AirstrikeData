@@ -3,9 +3,14 @@ from appJar import gui
 from datetime import date
 import pdf_extractor as ex
 import webscrape as scr
+import os
 
 exist = "Optional"
 out = "Select path..."
+
+def launch(win):
+    app.showSubWindow(win)
+
 
 # handle button events
 def press(button):
@@ -13,20 +18,20 @@ def press(button):
         app.stop()
     else:
         # Existing logic
-        if app.getEntry("Existing Data") != "Optional":
+        if app.getEntry("Existing Data") != "":
             exist = app.getEntry("Existing Data")
-        else:
-            exist = ""
 
         # Output logic
-        if app.getEntry("Output") != "Select path...":
+        today = date.today()
+        d1 = today.strftime("%Y%m%d")
+        if app.getEntry("Output") != "":
             out = app.getEntry("Output")
-            today = date.today()
-            d1 = today.strftime("%Y%m%d")
+
             out = out + "/" + d1 + ".csv"
         else:
-            # TODO: FORCE USER INPUT
-            out = ""
+            out = os.environ['USERPROFILE'] + "\Desktop\\" + d1 + ".csv"
+            # TODO REMOVE DEBUG LINE
+            print("[DEBUG] No output specified, defaulting to Desktop: " + out)
 
         urls = scr.url_scrape()
         data = ex.data_from_urls(urls, out)
@@ -36,16 +41,17 @@ def press(button):
         app.stop()
 
 
-
-
 # create a GUI variable called app
 app = gui("OIR Airstrike Collection", "450x200")
+app.addLabel("title", "Airstrike Data Collection")
 app.setBg("gold")
 app.setFont(14)
 
-app.addLabel("title", "Airstrike Data Collection")
+app.startLabelFrame("File I/O")
+app.setSticky("ew")
+
 app.setLabelBg("title", "green")
-app.setLabelFg("title", "gold")
+app.setLabelFg("title", "white")
 
 app.addLabelFileEntry("Existing Data")
 app.setEntryDefault("Existing Data", exist)
@@ -54,6 +60,7 @@ app.setEntryDefault("Output", out)
 
 # link the buttons to the function called press
 app.addButtons(["Go", "Cancel"], press)
+app.stopLabelFrame()
 
 # start the GUI
 app.go()

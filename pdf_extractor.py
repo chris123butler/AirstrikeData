@@ -36,14 +36,21 @@ def text_from_url(url):
 
 def date_from(text):
     date = re.search(r'\w+\.* \d+, \d{4}', text)
-    dt_object = parse(date.group())  # parses found date into datetime object for consistent format
+    try:
+        dt_object = parse(date.group())  # parses found date into datetime object for consistent format
+    except:
+        dt_object = parse("9999-01-01")
 
     return dt_object
 
 
 def release_number_from(text):
     release_number = re.search(r'\d{8}-?\d*', text)
-    release_number = release_number.group()
+
+    try:
+        release_number = release_number.group()
+    except:
+        release_number = "0"
 
     return release_number
 
