@@ -4,7 +4,6 @@ from datetime import date
 import pdf_extractor as ex
 import webscrape as scr
 import os
-import time
 
 exist = "Optional"
 out = "Select path..."
