@@ -4,6 +4,7 @@ from datetime import date
 import pdf_extractor as ex
 import webscrape as scr
 import os
+import time
 
 exist = "Optional"
 out = "Select path..."
@@ -26,7 +27,6 @@ def press(button):
         d1 = today.strftime("%Y%m%d")
         if app.getEntry("Output") != "":
             out = app.getEntry("Output")
-
             out = out + "/" + d1 + ".csv"
         else:
             out = os.environ['USERPROFILE'] + "\Desktop\\" + d1 + ".csv"
@@ -43,6 +43,9 @@ def press(button):
 
 # create a GUI variable called app
 app = gui("OIR Airstrike Collection", "450x200")
+app.addStatusbar(fields=1)
+app.setStatusbar("NOTICE: Program will freeze during execution.", 0)
+app.setStatusFont(8)
 app.addLabel("title", "Airstrike Data Collection")
 app.setBg("gold")
 app.setFont(14)
