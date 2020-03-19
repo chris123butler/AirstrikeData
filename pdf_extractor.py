@@ -36,13 +36,28 @@ def text_from_url(url):
     return full_text
 
 
+# strips leading digits from dates
+def remove_leading_digits(bad_date):
+    good_date = ''
+    for i in range(len(bad_date)):
+        if bad_date[i].isalpha():
+            good_date = bad_date[i:]
+            break
+        else:
+            continue
+
+    return good_date
+
+
 # returns a datetime object from a string using regular expression
 def date_from(text):
     date = re.search(r'\w+\.* \d+, \d{4}', text)
     try:
         dt_object = parse(date.group())  # parses found date into datetime object for consistent format
-    except:
-        dt_object = parse("9999-01-01")
+    except AttributeError:
+        return None
+    except ValueError:
+        dt_object = parse(remove_leading_digits(date.group()))
 
     return dt_object
 
@@ -53,8 +68,8 @@ def release_number_from(text):
 
     try:
         release_number = release_number.group()
-    except:
-        release_number = "0"
+    except AttributeError:
+        return None
 
     return release_number
 
