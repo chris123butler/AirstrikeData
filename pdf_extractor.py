@@ -9,6 +9,7 @@ import requests
 import io
 
 
+# given the file path, opens a file from local machine and returns a string
 def text_from_file(file):
     with open(file, 'rb') as raw_file:
         pdf_reader = PyPDF2.PdfFileReader(raw_file)
@@ -21,6 +22,7 @@ def text_from_file(file):
     return full_text
 
 
+# given the url, opens a file remotely and returns a string
 def text_from_url(url):
     response = requests.get(url)
     with io.BytesIO(response.content) as raw_file:
@@ -34,6 +36,7 @@ def text_from_url(url):
     return full_text
 
 
+# returns a datetime object from a string using regular expression
 def date_from(text):
     date = re.search(r'\w+\.* \d+, \d{4}', text)
     try:
@@ -44,8 +47,9 @@ def date_from(text):
     return dt_object
 
 
+# returns a release number from a string using regular expression
 def release_number_from(text):
-    release_number = re.search(r'\d{8}-?\d*', text)
+    release_number = re.search(r'\d{8}', text)
 
     try:
         release_number = release_number.group()
