@@ -2,3 +2,4 @@ appJar
 pandas
 PyPDF2
 requests
+bs4
