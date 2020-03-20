@@ -8,7 +8,6 @@ import os
 
 exist = "Optional"
 out = "Select path..."
-app = gui("OIR Airstrike Collection", "450x250")
 total_urls = 1
 curr_url = 0
 
@@ -76,9 +75,9 @@ def press(button):
 
 
 # create a GUI variable called app
-
+app = gui("OIR Airstrike Collection", "450x275")
 app.addStatusbar(fields=1)
-app.setStatusbar("NOTICE: Program will freeze during execution.", 0)
+app.setStatusbar("NOTICE: Program may freeze during execution, do not force close.", 0)
 app.setStatusFont(8)
 app.addLabel("title", "Airstrike Data Collection")
 app.setBg("gold")
