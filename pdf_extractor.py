@@ -97,7 +97,7 @@ def create_and_save_dataframe(dictionary, dest_file):
 def data_from_files(files, path):
     data = {'Release Number': [],
             'URL': [],
-            'Report Date':  [],
+            'Report Date': [],
             'Strike Date': [],
             'Number of Strikes': [],
             'Country': [],
@@ -122,34 +122,18 @@ def data_from_files(files, path):
     return data
 
 
-# given a list of urls and a destination path, returns a populated dataframe and writes it to a csv file
-def data_from_urls(urls, path):
-    data = {'Release Number': [],
-            'URL': [],
-            'Report Date': [],
-            'Strike Date': [],
-            'Number of Strikes': [],
-            'Country': [],
-            'Location': [],
-            'Targeted': [],
-            'Unit': [],
-            'Number of Units': [],
-            'Detroyed': [],
-            'Flagged': [],
-            'Initials': []}
+# given a single url and a dictionary, appends the data extracted to the passed dictionary
+def data_from_url(url, d):
+    try:
+        text = text_from_url(url)
+    except PyPDF2.utils.PdfReadError:
+        print("error with url: " + url)
+        return
 
-    for url in urls:
-        print(url)
-        try:
-            text = text_from_url(url)
-        except PyPDF2.utils.PdfReadError:
-            continue
-        date = date_from(text)
-        release_number = release_number_from(text)
-        data['Release Number'].append(release_number)
-        data['URL'].append(url)
-        data['Report Date'].append(date)
+    date = date_from(text)
+    rel = release_number_from(text)
 
-    data = fill_empty_values(data)
-    data = create_and_save_dataframe(data, path)
-    return data
+    d['Release Number'].append(rel)
+    d['URL'].append(url)
+    d['Report Date'].append(date)
+    return
