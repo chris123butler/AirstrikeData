@@ -105,7 +105,7 @@ def data_from_files(files, path):
             'Targeted': [],
             'Unit': [],
             'Number of Units': [],
-            'Detroyed': [],
+            'Destroyed': [],
             'Flagged': [],
             'Initials': []}
 
@@ -124,10 +124,11 @@ def data_from_files(files, path):
 
 # given a single url and a dictionary, appends the data extracted to the passed dictionary
 def data_from_url(url, d):
+    print(url)
     try:
         text = text_from_url(url)
     except PyPDF2.utils.PdfReadError:
-        print("error with url: " + url)
+        print("****[ERROR WITH URL] " + url)
         return
 
     date = date_from(text)
