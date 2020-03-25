@@ -100,6 +100,7 @@ def execute():
         app.after(100, app.setMeter("prog", 100))
         # data = ex.data_from_urls(urls, out)
         print(data)
+        app.infoBox("Process Complete", "The .csv file has been saved to " + out, parent=None)
     else:
         print("[ERROR] Cannot save output file to path: " + out)
 
