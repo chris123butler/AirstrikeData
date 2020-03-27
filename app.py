@@ -1,17 +1,18 @@
-# import the library
+# Libraries
 from appJar import gui
 from datetime import date
 import pdf_extractor as ex
-import PyPDF2
 import webscrape as scr
 import os
 
+# Global Variables
 exist = "Optional"
 out = "Select path..."
-total_urls = 1
+total_urls = 0
 curr_url = 0
 
 
+# Uses given length of URLs array to calculate % out of 100
 def increment_progress_bar(length):
     global curr_url
     app.setMeter("prog", curr_url/length * 100)
@@ -36,6 +37,7 @@ def create_dict():
 
 
 def execute():
+    # TODO: Make existing data useful
     if app.getEntry("Existing Data") != "":
         exist = app.getEntry("Existing Data")
 
@@ -48,7 +50,7 @@ def execute():
         out = os.path.normpath(os.path.expanduser("~/Desktop/"))
 
     # TODO: REMOVE DEBUG URLS ARRAY
-    # urls = scr.url_scrape()
+    #urls = scr.url_scrape()
     urls = [
         "https://www.inherentresolve.mil/Portals/14/CJTF-OIR%20%2020190104_01%20Strike%20Release.pdf?ver=2019-01-04-114833-703",
         "https://www.inherentresolve.mil/Portals/14/Documents/Strike%20Releases/2019/01%20JAN/CJTF-OIR%2020190115-02%20Strike%20Release.pdf?ver=2019-01-15-134948-363",
@@ -93,16 +95,18 @@ def execute():
         out = os.path.normpath(out + "/" + d1 + ".csv")
         data = create_dict()
         for url in urls:
-            ex.data_from_url(url, data)
+            app.after(100, ex.data_from_url(url, data))
             app.after(100, increment_progress_bar(total_urls))
         data = ex.fill_empty_values(data)
         data = ex.create_and_save_dataframe(data, out)
         app.after(100, app.setMeter("prog", 100))
-        # data = ex.data_from_urls(urls, out)
         print(data)
         app.infoBox("Process Complete", "The .csv file has been saved to " + out, parent=None)
+        app.stop()
     else:
         print("[ERROR] Cannot save output file to path: " + out)
+        app.infoBox("Error", "Cannot save to specified output path", parent=None)
+        app.stop()
 
 
 # handle button events
