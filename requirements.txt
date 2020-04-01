@@ -3,3 +3,4 @@ pandas
 PyPDF2
 requests
 bs4
+word2number

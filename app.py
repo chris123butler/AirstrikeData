@@ -22,15 +22,13 @@ def increment_progress_bar(length):
 def create_dict():
     data = {'Release Number': [],
             'URL': [],
-            'Report Date': [],
-            'Strike Date': [],
-            'Number of Strikes': [],
+            'Report Date':  [],
             'Country': [],
             'Location': [],
-            'Targeted': [],
-            'Unit': [],
+            'Number of Strikes': [],
+            'Action': [],
             'Number of Units': [],
-            'Detroyed': [],
+            'Unit': [],
             'Flagged': [],
             'Initials': []}
     return data
