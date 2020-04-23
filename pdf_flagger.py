@@ -28,3 +28,8 @@ def flagger(data):
 
 #    if count/len(data['Number of Units']) < .10:
 # TypeError: unsupported operand type(s) for /: 'tuple' and 'int'
+
+
+#NEW EDIT: Just realized this can't run at the same time as the extractor
+#          since it compares entries to the totoal amount of entries, which
+#          won't be accurate until after getting all entries 
