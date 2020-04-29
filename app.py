@@ -92,7 +92,7 @@ def execute():
         total_urls = len(urls)
         out = os.path.normpath(out + "/" + d1 + ".csv")
         data = create_dict()
-        # if recent_file:
+        # if not recent_file:
         #     stripped_entries = ex.strip_tags(scr.get_2014_strings())
         #     for entry in stripped_entries:
         #         ex.data_from_text(entry, data)
