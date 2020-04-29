@@ -92,6 +92,10 @@ def execute():
         total_urls = len(urls)
         out = os.path.normpath(out + "/" + d1 + ".csv")
         data = create_dict()
+        # if recent_file:
+        #     stripped_entries = ex.strip_tags(scr.get_2014_strings())
+        #     for entry in stripped_entries:
+        #         ex.data_from_text(entry, data)
         for url in urls:
             app.after(100, ex.data_from_url(url, data))
             app.after(100, increment_progress_bar(total_urls))
