@@ -291,6 +291,8 @@ def data_from_text(s, d):
     return
 
 
+# this method has access to the data for each row. Returns a flagged message if the data fail sanity checks,
+# returns None if the data pass all sanity checks
 def fails_sanity_checks(release, url, date, country, location, strikes, action, number, unit):
     flagged_message = 'FLAGGED'
     if (release.equals(None) and not(date.year.equals(2014)) or
