@@ -4,6 +4,7 @@ from datetime import date
 import pdf_extractor as ex
 import webscrape as scr
 import os
+import pandas as pd
 
 # Global Variables
 exist = "Optional"
@@ -36,9 +37,7 @@ def create_dict():
 
 def execute():
     # TODO: Make existing data useful
-    if app.getEntry("Existing Data") != "":
-        exist = app.getEntry("Existing Data")
-
+    existingPath = app.getEntry("Existing Data")
     # Output logic
     today = date.today()
     d1 = today.strftime("%Y%m%d")
@@ -86,7 +85,11 @@ def execute():
         "https://www.inherentresolve.mil/Portals/14/2018StrikeReleases/CJTF-OIR%20Strike%20Release%2020180413-01.pdf?ver=2018-04-13-093657-337",
         "https://www.inherentresolve.mil/Portals/14/2018StrikeReleases/CJTF-OIR%20Strike%20Release%2020180420-01.pdf?ver=2018-04-20-075001-643"
     ]
-
+    if existingPath != "":
+        recentData = pd.read_csv(existingPath)
+        recentDataURLs = recentData['URL'].tolist()
+        # for x in recentDataURLs:
+        #      urls.remove(str(x))
     if os.path.exists(out):
         global total_urls
         total_urls = len(urls)
