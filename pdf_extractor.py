@@ -260,9 +260,9 @@ def data_from_url(url, d):
         d['Action'].append(result[3])
         d['Number of Units'].append(result[4])
         d['Unit'].append(result[5])
-        # d['Flagged'].append(fails_sanity_checks(rel, url, date, result[0], result[1],
-        #                                         result[2], result[3], result[4], result[5]))
-        d['Flagged'].append(None)
+        d['Flagged'].append(fails_sanity_checks(rel, url, date, result[0], result[1],
+                                                result[2], result[3], result[4], result[5]))
+        # d['Flagged'].append(None)
         d['Initials'].append(None)
 
     return
@@ -285,9 +285,9 @@ def data_from_text(s, d):
         d['Action'].append(result[3])
         d['Number of Units'].append(result[4])
         d['Unit'].append(result[5])
-        # d['Flagged'].append(fails_sanity_checks(rel, url, date, result[0], result[1],
-        #                                         result[2], result[3], result[4], result[5]))
-        d['Flagged'].append(None)
+        d['Flagged'].append(fails_sanity_checks(rel, url, date, result[0], result[1],
+                                                result[2], result[3], result[4], result[5]))
+        # d['Flagged'].append(None)
         d['Initials'].append(None)
 
     return
@@ -297,15 +297,15 @@ def data_from_text(s, d):
 # returns None if the data pass all sanity checks
 def fails_sanity_checks(release, url, date, country, location, strikes, action, number, unit):
     flagged_message = 'FLAGGED'
-    if (release.equals(None) and not(date.year.equals(2014)) or
-            url.equals(None) or
-            date.equals(None) or
-            country.equals(None) or
-            location.equals(None) or
-            strikes.equals(None) or
-            action.equals(None) or
-            number.equals(None) or
-            unit.equals(None)):
+    if (release == None and not(date.year.equals(2014)) or
+            url == None or
+            date == None or
+            country == None or
+            location == None or
+            strikes == None or
+            action == None or
+            number == None or
+            unit == None):
         return flagged_message
 
     return None

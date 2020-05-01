@@ -88,8 +88,9 @@ def execute():
     if existingPath != "":
         recentData = pd.read_csv(existingPath)
         recentDataURLs = list(recentData['URL'].unique())
-        for x in recentDataURLs:
-            urls.remove(str(x))
+        urls = [x for x in urls if x not in recentDataURLs]
+        # for x in recentDataURLs:
+        #     urls.remove(str(x))
     if os.path.exists(out):
         global total_urls
         total_urls = len(urls)
