@@ -298,14 +298,14 @@ def data_from_text(s, d):
 def fails_sanity_checks(release, url, date, country, location, strikes, action, number, unit):
     flagged_message = 'FLAGGED'
     if (release == None and not(date.year.equals(2014)) or
-            url == None or
+            url == None or 
             date == None or
-            country == None or
+            country == None and not(country.equals(syria)) and not(country.equals(iraq)) or
             location == None or
             strikes == None or
             action == None or
-            number == None or
-            unit == None):
+            number == None and not(number.is_integer()) or
+            unit == None and (unit.equals('strike')) or (unit.equals('strikes')):
         return flagged_message
 
     return None
