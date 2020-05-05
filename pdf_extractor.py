@@ -305,7 +305,7 @@ def fails_sanity_checks(release, url, date, country, location, strikes, action, 
             strikes == None or
             action == None or
             number == None and not(number.is_integer()) or
-            unit == None and (unit.equals('strike')) or (unit.equals('strikes')):
+            unit == None and (unit.equals('strike')) and (unit.equals('strikes'))):
         return flagged_message
 
     return None
