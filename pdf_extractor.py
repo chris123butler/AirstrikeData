@@ -311,7 +311,7 @@ def fails_sanity_checks(release, url, date, country, location, strikes, action, 
     if country not in ['syria', 'iraq']:
         return flagged_message
 
-    if not number.is_integer():
+    if not isinstance(number, int):
         return flagged_message
 
     if unit in ['strike', 'strikes', 'airstrike', 'airstrikes']:
