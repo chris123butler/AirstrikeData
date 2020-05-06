@@ -297,7 +297,7 @@ def data_from_text(s, d):
 # returns None if the data pass all sanity checks
 def fails_sanity_checks(release, url, date, country, location, strikes, action, number, unit):
     flagged_message = 'FLAGGED'
-    if (release == None and not(date.year.equals(2014)) or
+    if (release == None and not(date.year == 2014) or
             url == None or 
             date == None or
             country == None or
