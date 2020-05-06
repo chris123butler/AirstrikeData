@@ -308,4 +308,7 @@ def fails_sanity_checks(release, url, date, country, location, strikes, action, 
             unit == None and (unit.equals('strike')) and (unit.equals('strikes'))):
         return flagged_message
 
+    if (country not in ['syria', 'iraq']):
+        return flagged_message
+
     return None
