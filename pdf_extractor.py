@@ -125,7 +125,7 @@ def strike_results_from(text):
                             else:
                                 break
                         holding_list.reverse()
-                        holding_list = [x for x in holding_list if x not in ['isis', 'isil']]
+                        holding_list = [x for x in holding_list if x not in ['isis', 'isil', 'daesh']]
                         target_string = ' '.join(holding_list)
                         if target_string in ['strikes', 'strike', 'airstrikes']:
                             try:
