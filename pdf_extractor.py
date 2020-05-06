@@ -300,15 +300,21 @@ def fails_sanity_checks(release, url, date, country, location, strikes, action, 
     if (release == None and not(date.year.equals(2014)) or
             url == None or 
             date == None or
-            country == None and not(country.equals(syria)) and not(country.equals(iraq)) or
+            country == None or
             location == None or
             strikes == None or
             action == None or
-            number == None and not(number.is_integer()) or
-            unit == None and (unit.equals('strike')) and (unit.equals('strikes'))):
+            number == None  or
+            unit == None):
         return flagged_message
 
-    if (country not in ['syria', 'iraq']):
+    if country not in ['syria', 'iraq']:
+        return flagged_message
+
+    if not number.is_integer():
+        return flagged_message
+
+    if unit in ['strike', 'strikes', 'airstrike', 'airstrikes']:
         return flagged_message
 
     return None
