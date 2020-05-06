@@ -115,6 +115,7 @@ def execute():
             return
         if existingPath != "":
             data = pd.concat([recentData, data])
+        data.sort_values(by=['Report Date'], inplace=True, ascending=False)
         data.to_csv(out, index=None, header=True)
         app.after(100, app.setMeter("prog", 100))
         print(data)
