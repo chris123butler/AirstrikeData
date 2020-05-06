@@ -239,7 +239,7 @@ def data_from_files(files, path):
 
 # given a single url and a dictionary, appends the data extracted to the passed dictionary
 def data_from_url(url, d):
-    print(url)
+    # print(url)
     try:
         text = text_from_url(url)
     except PyPDF2.utils.PdfReadError:
@@ -285,9 +285,9 @@ def data_from_text(s, d):
         d['Action'].append(result[3])
         d['Number of Units'].append(result[4])
         d['Unit'].append(result[5])
-        d['Flagged'].append(fails_sanity_checks(rel, url, date, result[0], result[1],
-                                                result[2], result[3], result[4], result[5]))
-        # d['Flagged'].append(None)
+        # d['Flagged'].append(fails_sanity_checks(rel, url, date, result[0], result[1],
+        #                                         result[2], result[3], result[4], result[5]))
+        d['Flagged'].append(None)
         d['Initials'].append(None)
 
     return

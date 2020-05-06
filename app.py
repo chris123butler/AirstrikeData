@@ -16,14 +16,14 @@ curr_url = 0
 # Uses given length of URLs array to calculate % out of 100
 def increment_progress_bar(length):
     global curr_url
-    app.setMeter("prog", curr_url/length * 100)
+    app.setMeter("prog", curr_url / length * 100)
     curr_url += 1
 
 
 def create_dict():
     data = {'Release Number': [],
             'URL': [],
-            'Report Date':  [],
+            'Report Date': [],
             'Country': [],
             'Location': [],
             'Number of Strikes': [],
@@ -47,7 +47,7 @@ def execute():
         out = os.path.normpath(os.path.expanduser("~/Desktop/"))
 
     # TODO: REMOVE DEBUG URLS ARRAY
-    #urls = scr.url_scrape()
+    # urls = scr.url_scrape()
     urls = [
         "https://www.inherentresolve.mil/Portals/14/CJTF-OIR%20%2020190104_01%20Strike%20Release.pdf?ver=2019-01-04-114833-703",
         "https://www.inherentresolve.mil/Portals/14/Documents/Strike%20Releases/2019/01%20JAN/CJTF-OIR%2020190115-02%20Strike%20Release.pdf?ver=2019-01-15-134948-363",
@@ -89,13 +89,16 @@ def execute():
         recentData = pd.read_csv(existingPath)
         recentDataURLs = list(recentData['URL'].unique())
         urls = [x for x in urls if x not in recentDataURLs]
-        # for x in recentDataURLs:
-        #     urls.remove(str(x))
+
     if os.path.exists(out):
         global total_urls
         total_urls = len(urls)
         out = os.path.normpath(out + "/" + d1 + ".csv")
         data = create_dict()
+        if existingPath == "":
+            stripped_entries = ex.strip_tags(scr.get_2014_strings())
+            for entry in stripped_entries:
+                ex.data_from_text(entry, data)
         # if not recent_file:
         #     stripped_entries = ex.strip_tags(scr.get_2014_strings())
         #     for entry in stripped_entries:
@@ -103,8 +106,16 @@ def execute():
         for url in urls:
             app.after(100, ex.data_from_url(url, data))
             app.after(100, increment_progress_bar(total_urls))
-        data = ex.fill_empty_values(data)
-        data = ex.create_and_save_dataframe(data, out)
+        # data = ex.fill_empty_values(data)
+        # data = ex.create_and_save_dataframe(data, out)
+        data = pd.DataFrame.from_dict(data)
+        if data.empty:
+            app.infoBox("New Data Error", "No new data", parent=None)
+            app.stop()
+            return
+        if existingPath != "":
+            data = pd.concat([recentData, data])
+        data.to_csv(out, index=None, header=True)
         app.after(100, app.setMeter("prog", 100))
         print(data)
         app.infoBox("Process Complete", "The .csv file has been saved to " + out, parent=None)
